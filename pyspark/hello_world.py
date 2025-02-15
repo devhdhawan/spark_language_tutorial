@@ -12,5 +12,7 @@ print("Changes releated to featureD")
 
 print("Changes releated to featureE")
 
+print("Changes releated to featureF")
+
 
 
