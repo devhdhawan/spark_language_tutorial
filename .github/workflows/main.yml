@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
-      # DATABRICKS_HOST: ${{ secrets.DEPLOYMENT_TARGET_URL }}
-      # DATABRICKS_TOKEN:  ${{ secrets.DEPLOYMENT_TARGET_TOKEN }}
+      DATABRICKS_HOST: ${{ secrets.DEPLOYMENT_TARGET_URL }}
+      DATABRICKS_TOKEN:  ${{ secrets.DEPLOYMENT_TARGET_TOKEN }}
       REPO_PATH: /Workspace/Users/himanshudimp05@gmail.com/spark_language_tutorial
       # DBFS_LIB_PATH: dbfs:/path/to/libraries/
       # LATEST_WHEEL_NAME: latest_wheel_name.whl
