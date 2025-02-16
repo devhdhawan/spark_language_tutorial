@@ -22,7 +22,7 @@ jobs:
     env:
       DATABRICKS_HOST: ${{ secrets.DEPLOYMENT_TARGET_URL }}
       DATABRICKS_TOKEN:  ${{ secrets.DEPLOYMENT_TARGET_TOKEN }}
-      REPO_PATH: /Workspace/Repos/67e508af-5423-45fb-b8f9-42ade2e6a796
+      REPO_PATH: /Workspace/Repos/67e508af-5423-45fb-b8f9-42ade2e6a796/spark_language_tutorial
       # DBFS_LIB_PATH: dbfs:/path/to/libraries/
       # LATEST_WHEEL_NAME: latest_wheel_name.whl
 
