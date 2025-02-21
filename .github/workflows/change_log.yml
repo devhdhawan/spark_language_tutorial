@@ -6,8 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+            format: 'csv'
       - name: Get changed files
-        run: |
-          changed_files=$(git diff --name-only HEAD~1..HEAD)
 
-          echo "Changed files: $changed_files"
+        run: |
+          for changed_file in ${{ steps.files.outputs.all }}; 
+          do
+            echo "Do something with this ${changed_file}."
+            done
