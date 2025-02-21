@@ -14,5 +14,6 @@ jobs:
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
           for changed_file in ${{ steps.files.outputs.all }}; 
           do
+            echo "Change File Log"
             echo "Do something with this ${changed_file}."
             done
