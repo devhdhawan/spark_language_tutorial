@@ -14,4 +14,10 @@ print("Changes releated to featureE")
 
 print("Changes releated to featureF")
 
+<<<<<<< HEAD
 print("Changes releated to featureH")
+=======
+print("Changes releated to featureH")
+
+
+>>>>>>> 2b14421861bee4f937c26fa123d16542880d0dd7
