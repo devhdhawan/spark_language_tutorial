@@ -1,7 +1,7 @@
 name: List and filter variables
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
