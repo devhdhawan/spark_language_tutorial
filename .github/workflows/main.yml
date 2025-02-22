@@ -52,7 +52,11 @@ jobs:
     - name: Update Databricks Git folder
       run: |
         databricks repos update ${{env.REPO_PATH}} --branch "${{ steps.extract_branch.outputs.branch }}"
-
+    - name: YAML File to run
+      run: |
+        yaml_path=./yaml/list_all_variables.yml
+        pytest --config $yaml_path
+        
     # - name: Build Wheel and send to Databricks DBFS workspace location
     #   run: |
     #     cd $GITHUB_WORKSPACE
