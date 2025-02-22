@@ -1,33 +1,17 @@
-name: Run Tests on Push
-
-
+name: List and filter variables
 
 on:
-
   push:
-
-    branches: [ main ]
-
-
+    branches:
+      - main
 
 jobs:
-
-  build:
-
+  listAndFilterVariables:
     runs-on: ubuntu-latest
-
     steps:
-
-      - uses: actions/checkout@v3
-
-      - name: Run Tests
-
-        run: | 
-
-          # Assuming your YAML file is called "test_config.yaml" in the root directory
-
-          yaml_path="./yaml/list_all_variables.yml"
-
-          # Execute your test command using the YAML path
-
-          pytest --config $yaml_path
+      - name: List variables
+        run: |
+          echo "All variables"
+          env
+          echo "Filtered variables"
+          env | grep GITHUB
