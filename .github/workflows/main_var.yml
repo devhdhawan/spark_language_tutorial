@@ -14,4 +14,6 @@ jobs:
           echo "All variables"
           env
           echo "Filtered variables"
+          echo "Base ref: ${{ github.base_ref }}"
+          echo "Head ref: ${{ github.head_ref }}"
           env | grep GITHUB
