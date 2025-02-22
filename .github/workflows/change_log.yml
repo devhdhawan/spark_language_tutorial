@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setip-python@v3
         with:
-            format: 'csv'
-      - name: Get changed files
+          python-version: 3.9
+          
 
         run: |
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
