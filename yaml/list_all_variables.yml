@@ -1,0 +1,17 @@
+name: List and filter variables
+
+on:
+  pull_request:
+    branches:
+      - featureA
+
+jobs:
+  listAndFilterVariables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List variables
+        run: |
+          echo "All variables"
+          env
+          echo "Filtered variables"
+          env | grep GITHUB
