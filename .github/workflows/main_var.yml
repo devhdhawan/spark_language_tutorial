@@ -1,9 +1,7 @@
 name: List and filter variables
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
 
 jobs:
   listAndFilterVariables:
