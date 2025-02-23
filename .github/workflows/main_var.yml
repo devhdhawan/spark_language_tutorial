@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: List variables
         run: |
-          echo "All variables"
+          echo "All variables featureA"
           env
           echo "Filtered variables"
           echo "Base ref: ${{ github.base_ref }}"
