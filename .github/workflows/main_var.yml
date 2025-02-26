@@ -1,12 +1,18 @@
 name: List and filter variables
 
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main
 
 jobs:
   listAndFilterVariables:
     runs-on: ubuntu-latest
     steps:
+      - name: Create Change Log
+
+        run: |
+          echo
       - name: List variables
         run: |
           echo "All variables featureA"
