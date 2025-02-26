@@ -1,23 +1,23 @@
-name: List and filter variables
+# name: List and filter variables
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  listAndFilterVariables:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create Change Log
+# jobs:
+#   listAndFilterVariables:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Create Change Log
 
-        run: |
-          echo
-      - name: List variables
-        run: |
-          echo "All variables featureA"
-          env
-          echo "Filtered variables"
-          echo "Base ref: ${{ github.base_ref }}"
-          echo "Head ref: ${{ github.head_ref }}"
-          env | grep GITHUB
+#         run: |
+#           echo
+#       - name: List variables
+#         run: |
+#           echo "All variables featureA"
+#           env
+#           echo "Filtered variables"
+#           echo "Base ref: ${{ github.base_ref }}"
+#           echo "Head ref: ${{ github.head_ref }}"
+#           env | grep GITHUB
