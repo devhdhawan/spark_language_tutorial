@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: featureA
       - name: Run test
         run: |
           echo $GITHUB_WORKSPACE
+
+      - name: List All variables
+        run: |
+          echo "List all the variables"
+          echo "Base Ref: ${{github.base_ref}}"
+          echo "Base Head: ${{github.head_ref}}"
+          env | grep Github
+
