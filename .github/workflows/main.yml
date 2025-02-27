@@ -35,7 +35,7 @@ jobs:
       
       - name: Change Log CSV FILE
         run: |
-          git diff --name-status origin/${{github.base_ref}}..orign/${{github.head_ref}} > ${{github.workspace}}/cicd/change_log.csv
+          git diff --name-status ${{github.base_ref}}..${{github.head_ref}} > ${{github.workspace}}/cicd/change_log.csv
           echo "Run Python Script and read the change_log.csv file"
           python ./pyspark/python_script.py
         
