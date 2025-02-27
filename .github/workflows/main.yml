@@ -17,7 +17,6 @@ jobs:
           echo "List all the variables"
           echo "Base Ref: ${{github.base_ref}}"
           echo "Base Head: ${{github.head_ref}}"
-          env | grep Github
       - uses: jitterbit/get-changed-files@v1
         id: abc
         with:
