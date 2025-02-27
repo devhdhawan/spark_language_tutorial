@@ -44,13 +44,10 @@ jobs:
         run: |
           git diff --name-status origin/${{github.base_ref}}..origin/${{github.head_ref}} > ${{github.workspace}}/cicd/change_log.csv
           echo "Run Python Script and read the change_log.csv file"
-          python ./pyspark/python_script.py
-        
-      - id: Files
-        uses: jitterbit/get-changed-files@v1
-      - run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "Do something with this ${changed_file}."
-           
+          # After using git fetch --all this line started working.
 
-          done
+          python ./pyspark/python_script.py 
+        env:
+          CONTEXT_VARS: ${{toJson(vars)}}
+        
+     
