@@ -23,4 +23,7 @@ jobs:
       - run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
             echo "Do something with this ${changed_file}."
+            if changed_file[-4:]=="json"
+              echo "Do something with this ${changed_file}."
+
           done
