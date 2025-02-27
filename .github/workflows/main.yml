@@ -28,8 +28,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r cicd/requirement.txt
           echo "All the required Library Install"
-      - name: Run Python Script
+        
+      # - name: Run Python Script
+      #   run: |
+      #     python ./pyspark/python_script.py
+      
+      - name: Change Log CSV FILE
         run: |
+          git diff --name-status origin/${{github.base_ref}}..origin/${{github.head_ref}} > ${{github.workspace}}/cicd/change_log.csv
+          echo "Run Python Script and read the change_log.csv file"
           python ./pyspark/python_script.py
         
       - id: Files
