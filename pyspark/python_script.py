@@ -15,7 +15,7 @@ df=pd.read_csv(changelog_path,delimiter="\t",names=['change','name'])
 
 df=df[df['change']!='D']
 
-vars=json.loads(os.getenv('CONTEXT_VARS'))
+vars=json.loads(os.getenv("CONTEXT_VARS"))
 print(vars)
 
 print(df)
