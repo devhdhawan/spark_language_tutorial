@@ -2,6 +2,8 @@ name: Checkout Branch Test
 
 on:
   pull_request:
+    branches: 
+      - main
 
 jobs:
   tag:
