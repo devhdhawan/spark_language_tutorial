@@ -18,12 +18,25 @@ jobs:
           echo "Base Ref: ${{github.base_ref}}"
           echo "Base Head: ${{github.head_ref}}"
 
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+        
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r cicd/requirement.txt
+          echo "All the required Library Install"
+      - name: Run Python Script
+        run: |
+          python ./pyspark/python_script.py
+        
       - id: Files
         uses: jitterbit/get-changed-files@v1
       - run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
             echo "Do something with this ${changed_file}."
-            if changed_file[-4:]=="json"
-              echo "Do something with this ${changed_file}."
+           
 
           done
