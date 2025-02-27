@@ -2,13 +2,12 @@ name: Checkout Branch Test
 
 on:
   pull_request:
-    
 
 jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Run test
-    run: |
-    echo $GITHUB_WORKSPACE
+      - uses: actions/checkout@v4
+      - name: Run test
+        run: |
+          echo $GITHUB_WORKSPACE
