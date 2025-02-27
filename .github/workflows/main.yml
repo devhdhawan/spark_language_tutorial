@@ -34,6 +34,11 @@ jobs:
       # - name: Run Python Script
       #   run: |
       #     python ./pyspark/python_script.py
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: List all branches
+        run: git branch -a
       
       - name: Change Log CSV FILE
         run: |
