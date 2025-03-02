@@ -46,7 +46,7 @@ jobs:
           echo "Run Python Script and read the change_log.csv file"
           # After using git fetch --all this line started working.
 
-          python ./pyspark/python_script.py 
+          # python ./pyspark/python_script.py 
         env:
           CONTEXT_VARS: ${{toJson(vars)}}
         
