@@ -16,9 +16,13 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
+stages:
+  - stage: DevBuild
+    jobs:
+      - job: RunScript
+        steps:
+          - task: PythonScript@0
+            inputs:
+              scriptSource: 'filePath'
+              scriptPath: $(System.DefaultWorkingDirectory)/cicd/databricks_steps.py
+          - script: echo DEV Job Run
