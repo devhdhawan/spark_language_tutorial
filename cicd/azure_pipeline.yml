@@ -31,7 +31,9 @@ stages:
         steps:
           - script: |
               python -m pip install --upgrade pip
-              python install -r $(System.DefaultWorkingDirectory)/cicd/requirement.txt
+              echo "Successfully Updated PIP"
+              pip install -r $(System.DefaultWorkingDirectory)/cicd/requirement.txt
+              echo "Installation is completd for the libraries"
           - task: PythonScript@0
             inputs:
               scriptSource: 'filePath'
