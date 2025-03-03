@@ -7,7 +7,7 @@ import pandas as pd
 
 
 #<-------- GET THE REPO PATH -------- >
-repo_root_dir = os.getenv("GITHUB_WORKSPACE")
+repo_root_dir = os.environ.get("REPO_ROOTPATH")
 print(f"REPO PATH:{repo_root_dir}")
 
 
