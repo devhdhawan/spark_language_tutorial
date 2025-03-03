@@ -26,11 +26,7 @@ stages:
               echo "$(Build.BuildNumber)"
               echo "$(Build.ArtifactStagingDirectory)"
               echo "$(Build.SourceVersion)"
-      - job: InstallDependencies
-        steps:
-          - script: |
-              python -m install --upgrade pip
-              python install -r $(System.DefaultWorkingDirectory)/cicd/requirement.txt
+    
       - job: RunScript
         steps:
           - script: |
