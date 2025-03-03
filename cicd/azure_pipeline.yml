@@ -26,7 +26,7 @@ stages:
               echo "$(Build.BuildNumber)"
               echo "$(Build.ArtifactStagingDirectory)"
               echo "$(Build.SourceVersion)"
-      - job: Install Dependencies
+      - job: InstallDependencies
         steps:
           - script: |
               python -m install --upgrade pip
