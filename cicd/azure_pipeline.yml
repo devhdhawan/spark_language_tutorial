@@ -30,8 +30,8 @@ stages:
       - job: RunScript
         steps:
           - script: |
-              python -m install --upgrade pip
-              python install -r $(System.DefaultWorkingDirectory)/cicd/requirement.txt
+              python -m pip install --upgrade pip
+              python install -r cicd/requirement.txt
           - task: PythonScript@0
             inputs:
               scriptSource: 'filePath'
