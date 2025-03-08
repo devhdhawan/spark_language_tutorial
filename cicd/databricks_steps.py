@@ -16,7 +16,7 @@ host = os.environ.get("DATABRICKS_HOST")
 token = args.token[:]
 
 default_workdir = os.environ.get("SYSTEM_DEFAULTWORKINGDIRECTORY")
-
+git_dir = os.path.join(default_workdir, os.environ.get("GIT_ALIAS"))
 
 #<-------- GET THE REPO PATH -------- >
 repo_root_dir = os.environ.get("REPO_ROOTPATH")
@@ -62,9 +62,10 @@ def deploy_workflow(ws,df):
 
         #<--------- CHECK IF THE JOB JSON IS MODIFIED OR NEWLY ADDED --------->
         if file.split('.')[1]=='json':
-            workflow_file=file
-        
-            with open(workflow_file,'r') as file:
+            workflow_file_name,_=os.path.split(os.path.basename(file))
+            workflow_file_path=os.path.join(git_dir,workflow_file_name)
+
+            with open(workflow_file_path,'r') as file:
                 job_json=json.load(file)
             
             res=create_workflow(ws,job_json)
