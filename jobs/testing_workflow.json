@@ -8,7 +8,7 @@
     "max_concurrent_runs": 1,
     "tasks": [
         {
-            "task_key": "test_job",
+            "task_key": "test_jobss",
             "run_if": "ALL_SUCCESS",
             "notebook_task": {
                 "notebook_path": "/Workspace/Users/himanshudimp05@gmail.com/main/scripts/main",
