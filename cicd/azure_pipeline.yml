@@ -28,6 +28,7 @@ stages:
           - task: Bash@3
             displayName: "Print Variables"
             inputs:
+              targetType: "inline"
               script: |
                 echo "$(System.DefinitionId)"
                 echo "$(Build.BuildNumber)"
