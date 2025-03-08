@@ -19,28 +19,53 @@ pool:
 stages:
   - stage: DevBuild
     jobs:
-      - job: PrintVaribles
-        steps:
-          - script: |
-              echo "$(System.DefinitionId)"
-              echo "$(Build.BuildNumber)"
-              echo "$(Build.ArtifactStagingDirectory)"
-              echo "$(Build.SourceVersion)"
+      # - job: PrintVaribles
+      #   steps:
+      #     - script: |
+      #         echo "$(System.DefinitionId)"
+      #         echo "$(Build.BuildNumber)"
+      #         echo "$(Build.ArtifactStagingDirectory)"
+      #         echo "$(Build.SourceVersion)"
 
-              commit_id=$(Build.SourceVersion)
-              commit_id=${commit_id:0:7}
+      #         commit_id=$(Build.SourceVersion)
+      #         commit_id=${commit_id:0:7}
 
-              echo "commid id:$commit_id"
-    
-      - job: RunScript
+      #         echo "commid id:$commit_id"
+      - job: cicd_deployment
         steps:
-          - script: |
-              python -m pip install --upgrade pip
-              echo "Successfully Updated PIP"
-              pip install -r $(System.DefaultWorkingDirectory)/cicd/requirement.txt
-              echo "Installation is completd for the libraries"
-          - task: PythonScript@0
+          - task: Bash@3
+            displayName: "Print Variables"
             inputs:
-              scriptSource: 'filePath'
-              scriptPath: $(System.DefaultWorkingDirectory)/cicd/databricks_steps.py
-          - script: echo DEV Job Run
+              script: |
+                echo "$(System.DefinitionId)"
+                echo "$(Build.BuildNumber)"
+                echo "$(Build.ArtifactStagingDirectory)"
+                echo "$(Build.SourceVersion)"
+
+                commit_id=$(Build.SourceVersion)
+                commit_id=${commit_id:0:7}
+
+                echo "commid id:$commit_id"
+          - task: Bash@3
+            displayName: "git diff command"
+            inputs:
+              script: |
+                commit_id=$(Build.SourceVersion)
+                commit_id=${commit_id:0:7}
+
+                git diff-tree --no-commit-id --name-status -m -r "$commit_id" > $(Build.ArtifactStagingDirectory)/change_log.csv
+
+                echo "list of changed files saved to output/drop/change_log.csv"
+              
+      # - job: RunScript
+      #   steps:
+      #     - script: |
+      #         python -m pip install --upgrade pip
+      #         echo "Successfully Updated PIP"
+      #         pip install -r $(System.DefaultWorkingDirectory)/cicd/requirement.txt
+      #         echo "Installation is completd for the libraries"
+      #     - task: PythonScript@0
+      #       inputs:
+      #         scriptSource: 'filePath'
+      #         scriptPath: $(System.DefaultWorkingDirectory)/cicd/databricks_steps.py
+      #     - script: echo DEV Job Run
