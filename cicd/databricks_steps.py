@@ -31,6 +31,7 @@ print(f"Change Log CSV FILE PATH:{changelog_path}")
 #<-------- READ CSV PATH -------- >
 df=pd.read_csv(changelog_path,delimiter="\t",names=['change','name'])
 df=df[df['change']!='D']
+print(df)
 
 #<--------- WORKSPACE CLIENT OBJECT TO ACCESS WORKSPACE RESOURCES --------->
 ws=WorkspaceClient(host=host,token=token)
