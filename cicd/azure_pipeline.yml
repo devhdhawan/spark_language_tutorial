@@ -50,6 +50,26 @@ stages:
                 git diff-tree --no-commit-id --name-status -m -r "$commit_id" > $(Build.ArtifactStagingDirectory)/change_log.csv
 
                 echo "list of changed files saved to output/drop/change_log.csv"
+          - task: Bash@3
+            displayName: "Create and Push tags"
+            inputs:
+              targetType: "inline"
+              script: |
+
+                tag_name="$(System.DefinitionId)_$(Build.BuildNumber)"
+
+                git tag $tag_name
+                echo "Tag created- $tag_name"
+
+                git push origin $tag_name
+                echo "Tag pushed to remote"
+
+          - task: PublishBuildArtifacts@1
+            name: "save_artifact"
+            inputs:
+              PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+              ArtifactName: "drop"
+              publishLocation: "Container"
               
       # - job: RunScript
       #   steps:

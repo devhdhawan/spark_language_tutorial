@@ -3,7 +3,19 @@ import json
 from databricks.sdk import WorkspaceClient
 import os
 import pandas as pd 
+import argparse
 # import chardet
+
+parser = argparse.ArgumentParser(
+    description="This script performs deployment tasks for "
+)
+parser.add_argument("--token", required=True)
+args = parser.parse_args()
+
+host = os.environ.get("DATABRICKS_HOST")
+token = args.token[:]
+
+default_workdir = os.environ.get("SYSTEM_DEFAULTWORKINGDIRECTORY")
 
 
 #<-------- GET THE REPO PATH -------- >
@@ -12,7 +24,8 @@ print(f"REPO PATH:{repo_root_dir}")
 
 
 #<-------- CREATE THE PATH TO ACCESS THE CHANGE LOG FILE -------- >
-changelog_path=os.path.join(repo_root_dir,"cicd/change_log.csv")
+# changelog_path=os.path.join(repo_root_dir,"cicd/change_log.csv")
+changelog_path = os.path.join(default_workdir, "_changelog", "drop", "change_log.csv")
 print(f"Change Log CSV FILE PATH:{changelog_path}")
 
 #<-------- READ CSV PATH -------- >
@@ -20,7 +33,7 @@ df=pd.read_csv(changelog_path,delimiter="\t",names=['change','name'])
 df=df[df['change']!='D']
 
 #<--------- WORKSPACE CLIENT OBJECT TO ACCESS WORKSPACE RESOURCES --------->
-ws=WorkspaceClient()
+ws=WorkspaceClient(host=host,token=token)
 
 def create_workflow(ws,job_json):
     headers = {
