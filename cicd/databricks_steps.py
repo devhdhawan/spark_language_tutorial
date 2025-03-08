@@ -34,7 +34,7 @@ df=df[df['change']!='D']
 print(df)
 print(df.change)
 print(df.name)
-print(df.change.split('.'))
+print(df.name.split('.'))
 
 #<--------- WORKSPACE CLIENT OBJECT TO ACCESS WORKSPACE RESOURCES --------->
 ws=WorkspaceClient(host=host,token=token)
@@ -56,7 +56,7 @@ def create_workflow(ws,job_json):
 def deploy_workflow(ws,df):
 
     #<--------- LIST OF FILES MODIFIED --------->
-    change_file_lst=list(df.change)
+    change_file_lst=list(df.name)
     for file in change_file_lst:
 
         #<--------- CHECK IF THE JOB JSON IS MODIFIED OR NEWLY ADDED --------->
