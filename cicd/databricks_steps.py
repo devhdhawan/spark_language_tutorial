@@ -34,7 +34,7 @@ df=df[df['change']!='D']
 print(df)
 print(df.change)
 print(df.name)
-print(df.name.split('.'))
+
 
 #<--------- WORKSPACE CLIENT OBJECT TO ACCESS WORKSPACE RESOURCES --------->
 ws=WorkspaceClient(host=host,token=token)
