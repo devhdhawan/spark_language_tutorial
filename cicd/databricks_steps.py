@@ -57,6 +57,7 @@ def deploy_workflow(ws,df):
 
     #<--------- LIST OF FILES MODIFIED --------->
     change_file_lst=list(df.name)
+    print(f"List of file change:{change_file_lst}")
     for file in change_file_lst:
 
         #<--------- CHECK IF THE JOB JSON IS MODIFIED OR NEWLY ADDED --------->
