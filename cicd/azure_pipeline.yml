@@ -39,16 +39,16 @@ stages:
                 commit_id=${commit_id:0:7}
 
                 echo "commid id:$commit_id"
-          # - task: Bash@3
-          #   displayName: "git diff command"
-          #   inputs:
-          #     script: |
-          #       commit_id=$(Build.SourceVersion)
-          #       commit_id=${commit_id:0:7}
+          - task: Bash@3
+            displayName: "git diff command"
+            inputs:
+              script: |
+                commit_id=$(Build.SourceVersion)
+                commit_id=${commit_id:0:7}
 
-          #       git diff-tree --no-commit-id --name-status -m -r "$commit_id" > $(Build.ArtifactStagingDirectory)/change_log.csv
+                git diff-tree --no-commit-id --name-status -m -r "$commit_id" > $(Build.ArtifactStagingDirectory)/change_log.csv
 
-          #       echo "list of changed files saved to output/drop/change_log.csv"
+                echo "list of changed files saved to output/drop/change_log.csv"
               
       # - job: RunScript
       #   steps:
