@@ -26,6 +26,11 @@ stages:
               echo "$(Build.BuildNumber)"
               echo "$(Build.ArtifactStagingDirectory)"
               echo "$(Build.SourceVersion)"
+
+              commit_id=$(Build.SourceVersion)
+              commit_id=${commit_id:0:7}
+
+              echo "commid id:$commit_id"
     
       - job: RunScript
         steps:
