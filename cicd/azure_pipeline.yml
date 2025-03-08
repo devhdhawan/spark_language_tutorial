@@ -42,6 +42,7 @@ stages:
           - task: Bash@3
             displayName: "git diff command"
             inputs:
+              targetType: "inline"
               script: |
                 commit_id=$(Build.SourceVersion)
                 commit_id=${commit_id:0:7}
