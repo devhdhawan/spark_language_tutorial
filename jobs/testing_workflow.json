@@ -1,6 +1,6 @@
 {
     "run_as": {
-        "user_name": "himanshudimp05@gmail.com"
+        "service_principal_name": "67e508af-5423-45fb-b8f9-42ade2e6a796"
     },
     "name": "testing_workflow",
     "webhook_notifications": {},
