@@ -85,6 +85,8 @@ def deploy_repo(api_client):
 
     #<--------- GET THE TAG --------->
     tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
+    print(f"TAG NAME:{tag_name}")
+    print(f"Repo ID:{repo_id}")
     repos_api=ReposApi(api_client)
     try:
         #<--------- UPDATE THE CODE CHANGES --------->
