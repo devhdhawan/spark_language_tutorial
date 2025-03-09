@@ -1,6 +1,9 @@
 #<-------- IMPORT ALL THE LIBRARY HERE -------- >
 import json 
 from databricks.sdk import WorkspaceClient
+from databricks_cli.workspace.api import WorkspaceApi,WorkspaceFileInfo
+from databricks_cli.repos.api import ReposApi
+from databricks_cli.sdk.api_client import ApiClient
 import os
 import pandas as pd 
 import argparse
@@ -15,6 +18,7 @@ args = parser.parse_args()
 host = os.environ.get("DATABRICKS_HOST")
 token = args.token[:]
 
+repo_id=os.environ.get('REPO_ID')
 default_workdir = os.environ.get("SYSTEM_DEFAULTWORKINGDIRECTORY")
 git_dir = os.path.join(default_workdir, os.environ.get("GIT_ALIAS"))
 
@@ -31,15 +35,12 @@ print(f"Change Log CSV FILE PATH:{changelog_path}")
 #<-------- READ CSV PATH -------- >
 df=pd.read_csv(changelog_path,delimiter="\t",names=['change','name'])
 df=df[df['change']!='D']
-print(df)
-print(df.change)
-print(df.name)
 
 
 #<--------- WORKSPACE CLIENT OBJECT TO ACCESS WORKSPACE RESOURCES --------->
-print(f"DATABRICKS HOST {host}")
-print(f"DATABRICKS TOKEN {token}")
 ws=WorkspaceClient(host=host,token=token)
+
+api_client = ApiClient(host=host,token=token,jobs_api_version='2.1')
 
 print(f"DATABRICKS HOST:{ws}")
 
@@ -80,6 +81,29 @@ def deploy_workflow(ws,df):
             print("NO WORKFLOW MODIFY OR CREATED NEWLY")
 
 
-deploy_workflow(ws,df)
+def deploy_repo(api_client):
 
+    #<--------- GET THE TAG --------->
+    tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
+    repos_api=ReposApi(api_client)
+    try:
+        #<--------- UPDATE THE CODE CHANGES --------->
+        repos_api.update(repo_id=repo_id,branch=None,tag=tag_name)
+    except Exception as e:
+        print("GETTING ERROR WHILE DEPLOYING THE CODE CHANGES")
+        print(e)
+     
+     
+
+def deployment(ws,api_client,df):
+
+    #<--------- DEPLOYING JOB WORKFLOW --------->
+    deploy_workflow(ws,df)
+
+    #<--------- DEPLOYING CODE CHANGE --------->
+    deploy_repo(api_client)
+
+
+
+deployment(ws,api_client,df)
     
