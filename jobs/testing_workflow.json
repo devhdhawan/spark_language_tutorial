@@ -11,7 +11,7 @@
             "task_key": "test_job",
             "run_if": "ALL_SUCCESS",
             "notebook_task": {
-                "notebook_path": "/Workspace/Users/himanshudimp05@gmail.com/main/scripts/main",
+                "notebook_path": "/Workspace/Repos/67e508af-5423-45fb-b8f9-42ade2e6a796/main/scripts/main",
                 "base_parameters": {
                     "Environment": "DEV"
                 },
