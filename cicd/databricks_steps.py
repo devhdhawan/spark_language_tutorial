@@ -90,7 +90,7 @@ def update_config(data):
     print(match_var_lst)
     for match in match_var_lst:
         map_val=os.environ.get(match[2:-2])
-        print(f"Match:{match[2:-2]} and Value:{map_val}")
+        
         if match[2:-2]=='ENV':
             data=data.replace(match,'DEV')
         elif map_val is None:
@@ -147,7 +147,7 @@ def deploy_repo(api_client):
     try:
         tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
 
-        ws.repos.update(repo_id=repo_id,branch=None,tag_name=tag_name)
+        ws.repos.update(repo_id=repo_id,branch=None,tag=tag_name)
     except Exception as e:
         print("NOT ABLE TO UPDATE THE REPOS IN DATABRICKS")
         print(e)
