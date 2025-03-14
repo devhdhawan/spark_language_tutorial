@@ -90,7 +90,7 @@ def update_config(data):
     print(match_var_lst)
     for match in match_var_lst:
         map_val=os.environ.get(match[2:-2])
-        print("Match:{match[2:-2]} and Value:{map_val}")
+        print(f"Match:{match[2:-2]} and Value:{map_val}")
         data=data.replace(match,map_val)
     
     return data
