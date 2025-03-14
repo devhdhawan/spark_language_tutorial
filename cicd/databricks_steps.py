@@ -4,7 +4,9 @@ from databricks.sdk import WorkspaceClient
 from databricks_cli.workspace.api import WorkspaceApi,WorkspaceFileInfo
 from databricks_cli.repos.api import ReposApi
 from databricks_cli.sdk.api_client import ApiClient
+from databricks.sdk.service import ImportFormat,Language
 import os
+import re
 import pandas as pd 
 import argparse
 # import chardet
@@ -80,20 +82,75 @@ def deploy_workflow(ws,df):
         else:
             print("NO WORKFLOW MODIFY OR CREATED NEWLY")
 
+def update_config(data):
+    
+    pattern=r'<<.*?>>'
+    match_var_lst=re.findall(pattern,data)
+    
+    for match in match_var_lst:
+        map_val=os.environ.get(match[2:-2])
+        data=data.replace(match,map_val)
+    
+    return data
+
+def generate_config(src_config_path):
+
+    modified_content=None
+    with open(src_config_path,'r') as file:
+        src_content=file.read()
+    
+    modified_content=update_config(src_content)
+
+    return modified_content
 
 def deploy_repo(api_client):
+    
+    #<--------- SET THE FORMAT AND LANGUAGE --------->
+    fmt=ImportFormat.SOURCE
+    language=Language.PYTHON
+    overwrite=True
 
-    #<--------- GET THE TAG --------->
-    tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
-    print(f"TAG NAME:{tag_name}")
-    print(f"Repo ID:{repo_id}")
-    repos_api=ReposApi(api_client)
+    print(f"FORMAT:{fmt} Language:{language}")
+
+    #<--------- CREATE THE SOURCE AND TARGET CONFIG PATH  --------->
+    src_config_path=os.path.join(git_dir,'pyspark/config_template.py')
+    target_config_path=os.path.join(git_dir,'pyspark/config.py')
+
+    print(f"SOURCE CONFIG PATH:{src_config_path}")
+    print(f"TARGET CONFIG PATH:{target_config_path}")
+
     try:
-        #<--------- UPDATE THE CODE CHANGES --------->
-        repos_api.update(repo_id=repo_id,branch=None,tag=tag_name)
+        #<--------- DELETE THE EXISTING TARGET CONFIG FILE --------->
+
+        print("START DELETING THE TARGET FILE FROM THE REPOS")
+        ws.workspace.delete(target_config_path,recursive=True)
+        print("SUCCESSFULLY DELETED THE CONFIG FILE")
+
     except Exception as e:
-        print("GETTING ERROR WHILE DEPLOYING THE CODE CHANGES")
+        print(f"Failed to delete config file in workspace {e}")
+    
+    
+    #<--------- GET THE CONFIG FILE  --------->
+    modified_content=generate_config(src_config_path)
+    print(modified_content)
+
+    try:
+        tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
+
+        ws.repos.update(repo_id=repo_id,branch=None,tag_name=tag_name)
+    except Exception as e:
+        print("NOT ABLE TO UPDATE THE REPOS IN DATABRICKS")
         print(e)
+
+
+    finally:
+        ws.workspace.upload(
+            path=target_config_path,
+            content=modified_content,
+            format=fmt,
+            language=language,
+            overwrite=overwrite,
+        )
      
      
 
@@ -103,7 +160,7 @@ def deployment(ws,api_client,df):
     deploy_workflow(ws,df)
 
     #<--------- DEPLOYING CODE CHANGE --------->
-    deploy_repo(api_client)
+    deploy_repo(ws)
 
 
 
