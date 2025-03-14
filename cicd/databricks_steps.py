@@ -4,7 +4,7 @@ from databricks.sdk import WorkspaceClient
 from databricks_cli.workspace.api import WorkspaceApi,WorkspaceFileInfo
 from databricks_cli.repos.api import ReposApi
 from databricks_cli.sdk.api_client import ApiClient
-from databricks.sdk.service import ImportFormat,Language
+from databricks.sdk.service.workspace import ImportFormat,Language
 import os
 import re
 import pandas as pd 
