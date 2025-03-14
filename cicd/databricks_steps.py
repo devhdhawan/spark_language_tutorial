@@ -121,10 +121,8 @@ def deploy_repo(api_client):
 
     #<--------- CREATE THE SOURCE AND TARGET CONFIG PATH  --------->
     src_config_path=os.path.join(git_dir,'pyspark/config_template.py')
-    target_config_path=os.path.join(git_dir,'pyspark/config')
+    target_config_path=os.path.join(repo_root_dir,'pyspark/config')
 
-    tmp_lst=os.listdir(os.path.join(git_dir,'pyspark/'))
-    print(tmp_lst)
 
     print(f"SOURCE CONFIG PATH:{src_config_path}")
     print(f"TARGET CONFIG PATH:{target_config_path}")
