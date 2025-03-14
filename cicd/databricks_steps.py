@@ -91,7 +91,12 @@ def update_config(data):
     for match in match_var_lst:
         map_val=os.environ.get(match[2:-2])
         print(f"Match:{match[2:-2]} and Value:{map_val}")
-        data=data.replace(match,map_val)
+        if match[2:-2]=='ENV':
+            data=data.replace(match,'DEV')
+        elif map_val is None:
+            print(f"Match:{match[2:-2]} and Value:{map_val}")
+        else:
+            data=data.replace(match,map_val)
     
     return data
 
