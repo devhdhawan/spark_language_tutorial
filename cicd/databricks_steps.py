@@ -87,8 +87,10 @@ def update_config(data):
     pattern=r'<<.*?>>'
     match_var_lst=re.findall(pattern,data)
     
+    print(match_var_lst)
     for match in match_var_lst:
         map_val=os.environ.get(match[2:-2])
+        print("Match:{match[2:-2]} and Value:{map_val}")
         data=data.replace(match,map_val)
     
     return data
@@ -115,6 +117,9 @@ def deploy_repo(api_client):
     #<--------- CREATE THE SOURCE AND TARGET CONFIG PATH  --------->
     src_config_path=os.path.join(git_dir,'pyspark/config_template.py')
     target_config_path=os.path.join(git_dir,'pyspark/config.py')
+
+    tmp_lst=os.listdir(os.path.join(git_dir,'pyspark/'))
+    print(tmp_lst)
 
     print(f"SOURCE CONFIG PATH:{src_config_path}")
     print(f"TARGET CONFIG PATH:{target_config_path}")
