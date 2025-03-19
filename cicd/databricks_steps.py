@@ -2,6 +2,7 @@
 import json 
 from databricks.sdk import WorkspaceClient
 from databricks_cli.workspace.api import WorkspaceApi,WorkspaceFileInfo
+from databricks.sdk.service.jobs import JobAccessControlRequest, JobSettings
 from databricks_cli.repos.api import ReposApi
 from databricks_cli.sdk.api_client import ApiClient
 from databricks.sdk.service.workspace import ImportFormat,Language
@@ -23,14 +24,13 @@ token = args.token[:]
 repo_id=os.environ.get('REPO_ID')
 default_workdir = os.environ.get("SYSTEM_DEFAULTWORKINGDIRECTORY")
 git_dir = os.path.join(default_workdir, os.environ.get("GIT_ALIAS"))
+group_name='global_group'
 
-#<-------- GET THE REPO PATH -------- >
 repo_root_dir = os.environ.get("REPO_ROOTPATH")
 print(f"REPO PATH:{repo_root_dir}")
 
 
 #<-------- CREATE THE PATH TO ACCESS THE CHANGE LOG FILE -------- >
-# changelog_path=os.path.join(repo_root_dir,"cicd/change_log.csv")
 changelog_path = os.path.join(default_workdir, "_changelog", "drop", "change_log.csv")
 print(f"Change Log CSV FILE PATH:{changelog_path}")
 
@@ -59,6 +59,21 @@ def create_workflow(ws,job_json):
 
     return res
 
+def grant_permission(job_id,ws):
+
+    acl=[{"group_name":f"{group_name}","permission_level":"CAN_MANAGE"}]
+
+    for ac in acl:
+
+        job_data=JobAccessControlRequest.from_dict(ac)
+
+        try:
+            permission_res=ws.jobs.update_permissions(job_id,access_control_list=[job_data])
+            print("Permission Updated Successfully")
+        except Exception as e:
+            print(e)
+
+
 
 def deploy_workflow(ws,df):
 
@@ -79,6 +94,8 @@ def deploy_workflow(ws,df):
             
             res=create_workflow(ws,job_json)
             print(f"JOB ID:{res['job_id']}")
+
+            job_res=grant_permission(res['job_id'],ws)
         else:
             print("NO WORKFLOW MODIFY OR CREATED NEWLY")
 
@@ -87,10 +104,10 @@ def update_config(data):
     pattern=r'<<.*?>>'
     match_var_lst=re.findall(pattern,data)
     
-    print(match_var_lst)
+
     for match in match_var_lst:
         map_val=os.environ.get(match[2:-2])
-        
+        #<--------- SETTING THE CONFIG VARIABLES --------->
         if match[2:-2]=='ENV':
             data=data.replace(match,'DEV')
         elif map_val is None:
@@ -99,6 +116,7 @@ def update_config(data):
             data=data.replace(match,map_val)
     
     return data
+
 
 def generate_config(src_config_path):
 
@@ -117,8 +135,6 @@ def deploy_repo(api_client):
     language=Language.PYTHON
     overwrite=True
 
-    print(f"FORMAT:{fmt} Language:{language}")
-
     #<--------- CREATE THE SOURCE AND TARGET CONFIG PATH  --------->
     src_config_path=os.path.join(git_dir,'pyspark/config_template.py')
     target_config_path=os.path.join(repo_root_dir,'pyspark/config')
@@ -130,7 +146,6 @@ def deploy_repo(api_client):
     try:
         #<--------- DELETE THE EXISTING TARGET CONFIG FILE --------->
 
-        print("START DELETING THE TARGET FILE FROM THE REPOS")
         ws.workspace.delete(target_config_path,recursive=True)
         print("SUCCESSFULLY DELETED THE CONFIG FILE")
 
@@ -143,8 +158,10 @@ def deploy_repo(api_client):
     print(modified_content)
 
     try:
+        #<--------- CREATE THE TAG NAME --------->
         tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
-
+        
+        #<--------- DEPLOY THE WORKFLOW --------->
         ws.repos.update(repo_id=repo_id,branch=None,tag=tag_name)
     except Exception as e:
         print("NOT ABLE TO UPDATE THE REPOS IN DATABRICKS")
@@ -152,6 +169,7 @@ def deploy_repo(api_client):
 
 
     finally:
+        #<--------- CREATE THE CONFIG FILE --------->
         ws.workspace.upload(
             path=target_config_path,
             content=modified_content,
