@@ -74,9 +74,12 @@ def validate_json(json_df):
             else:
                 print(f"INVALID SPN EXPECTING :{spn}")
 
+            
             all_notebooks=get_match_value(data,json_notebook_path)
+            print(f"ALL NOTEBOOK PATH LIST:{all_notebooks}")
 
             for path in all_notebooks:
+                print("START VALIDATING THE ALL NOTEBOOKS PATH")
                 validate_notebook_path(path,spn)
                     
 
