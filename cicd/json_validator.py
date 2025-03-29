@@ -16,7 +16,7 @@ json_df=df[df.name.str.endswith('.json')]
 print(json_df)
 
 env_lst=["dev","prod"]
-
+spn='85a4d344-30ac-400b-94e6-dcca17c1022a'
 
 # print(df)
 
@@ -49,8 +49,22 @@ def validate_json(json_df):
         except Exception as e:
             print(f"Invalid JSON {e}")
 
-        SPN=get_match_value(data,json_service_principal)
-        print(f"SERVICE PRINCIPAL:{SPN}")
+
+        job_id=data.get('job_id',None)
+
+        if job_id:
+            print("JOB JSON IS TO UPDATE THE EXISTING JOB")
+
+        else:
+            
+            spn_lst=get_match_value(data,json_service_principal)
+
+            if all(spn==match_value for match_value in spn_lst):
+                print(f"Valid SPN:{spn}")
+            else:
+                print(f"INVALID SPN EXPECTING :{spn}")
+
+            
         
 validate_json(json_df)
 
