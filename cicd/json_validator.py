@@ -33,7 +33,7 @@ def get_match_value(data,json_expr):
 
 
 def validate_json(json_df):
-
+    print("JSON VALIDATION IS START FROM HERE")
     for job_json_dict in json_df.to_dict('records'):
 
         _,json_path=json_df.values()
@@ -52,7 +52,7 @@ def validate_json(json_df):
         SPN=get_match_value(data,json_service_principal)
         print(f"SERVICE PRINCIPAL:{SPN}")
         
-
+validate_json(json_df)
 
 
         
