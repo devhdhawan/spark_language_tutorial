@@ -28,9 +28,19 @@ print(vars)
 
 json_service_principal=parse("run_as.service_principal_name")
 
+json_notebook_path=parse("tasks[*].notebook_tasks.notebook_path")
+
 def get_match_value(data,json_expr):
     return [match.value for match in json_expr.find(data)]
 
+def validate_notebook_path(path,spn):
+
+    path_expected=os.path.join('/Workspace/Repos/',spn)
+    if path.startwith(path_expected):
+        print(f"PATH IS VALID {path}")
+    else:
+        print(f"PATH IS INVALID EXPECTED PATH IS :{path_expected}")
+        
 
 def validate_json(json_df):
     print("JSON VALIDATION IS START FROM HERE")
@@ -63,6 +73,13 @@ def validate_json(json_df):
                 print(f"Valid SPN:{spn}")
             else:
                 print(f"INVALID SPN EXPECTING :{spn}")
+
+            all_notebooks=get_match_value(data,json_notebook_path)
+
+            for path in all_notebooks:
+                validate_notebook_path(path,spn)
+                    
+
 
             
         
