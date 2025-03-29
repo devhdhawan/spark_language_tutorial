@@ -36,7 +36,7 @@ def validate_json(json_df):
     print("JSON VALIDATION IS START FROM HERE")
     for job_json_dict in json_df.to_dict('records'):
 
-        _,json_path=json_df.values()
+        _,json_path=job_json_dict.values()
 
         json_dir,json_name=os.path.split(json_path)
 
