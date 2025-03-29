@@ -11,7 +11,12 @@ print(f"CHANGE LOG CSV PATH {change_log_path}")
 df=pd.read_csv(change_log_path,delimiter="\t",names=['change','name'])
 df=df[df['change']!='D']
 
-print(df)
+json_df=df[df.name.str.endswith('.json')]
+print(json_df)
+
+env_lst=["dev","prod"]
+
+# print(df)
 
 print("******** GETTING THE CONTEXT VARS ********")
 
