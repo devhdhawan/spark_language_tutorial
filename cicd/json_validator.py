@@ -46,8 +46,8 @@ def validate_json(json_df):
         try:
             with open(json_path,'r') as file:
                 data=json.loads(file)
-        except:
-            print("Invalid JSON")
+        except Exception as e:
+            print(f"Invalid JSON {e}")
 
         SPN=get_match_value(data,json_service_principal)
         print(f"SERVICE PRINCIPAL:{SPN}")
