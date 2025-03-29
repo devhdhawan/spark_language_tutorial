@@ -36,7 +36,7 @@ def get_match_value(data,json_expr):
 def validate_notebook_path(path,spn):
 
     path_expected=os.path.join('/Workspace/Repos/',spn)
-    if path.startwith(path_expected):
+    if path.startswith(path_expected):
         print(f"PATH IS VALID {path}")
     else:
         print(f"PATH IS INVALID EXPECTED PATH IS :{path_expected}")
