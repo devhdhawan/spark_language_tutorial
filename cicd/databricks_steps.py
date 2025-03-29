@@ -24,7 +24,8 @@ token = args.token[:]
 repo_id=os.environ.get('REPO_ID')
 default_workdir = os.environ.get("SYSTEM_DEFAULTWORKINGDIRECTORY")
 git_dir = os.path.join(default_workdir, os.environ.get("GIT_ALIAS"))
-group_name='Developers'
+
+developer_ad_group=os.environ.get('DEV_AD_GROUP')
 
 repo_root_dir = os.environ.get("REPO_ROOTPATH")
 print(f"REPO PATH:{repo_root_dir}")
@@ -64,9 +65,8 @@ def grant_permission(job_id,ws):
     manage_run='CAN_MANAGE_RUN'
     view='CAN_VIEW'
 
-    acl=[{"group_name":f"{group_name}","permission_level":f"{manage_run}"},
-         {"group_name":f"Operations","permission_level":f"{view}"}]
-
+    acl=[{"group_name":f"{group_name}","permission_level":f"{view}"},
+         {"group_name":f"Operations","permission_level":f"{manage_run}"}]
     for ac in acl:
 
         job_data=JobAccessControlRequest.from_dict(ac)
@@ -140,8 +140,8 @@ def deploy_repo(api_client):
     overwrite=True
 
     #<--------- CREATE THE SOURCE AND TARGET CONFIG PATH  --------->
-    src_config_path=os.path.join(git_dir,'pyspark/config_template.py')
-    target_config_path=os.path.join(repo_root_dir,'pyspark/config')
+    src_config_path=os.path.join(git_dir,'languages/config_template.py')
+    target_config_path=os.path.join(repo_root_dir,'languages/config')
 
 
     print(f"SOURCE CONFIG PATH:{src_config_path}")
