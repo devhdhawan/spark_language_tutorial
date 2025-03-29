@@ -45,7 +45,7 @@ def validate_json(json_df):
 
         try:
             with open(json_path,'r') as file:
-                data=json.loads(file)
+                data=json.load(file)
         except Exception as e:
             print(f"Invalid JSON {e}")
 
