@@ -2,7 +2,7 @@
     "run_as": {
         "service_principal_name": "85a4d344-30ac-400b-94e6-dcca17c1022a"
     },
-    "name": "testing_workflow_v2",
+    "name": "WF_TEST_DEV",
     "webhook_notifications": {},
     "timeout_seconds": 0,
     "max_concurrent_runs": 1,

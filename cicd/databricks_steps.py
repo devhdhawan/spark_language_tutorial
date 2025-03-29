@@ -24,7 +24,7 @@ token = args.token[:]
 repo_id=os.environ.get('REPO_ID')
 default_workdir = os.environ.get("SYSTEM_DEFAULTWORKINGDIRECTORY")
 git_dir = os.path.join(default_workdir, os.environ.get("GIT_ALIAS"))
-group_name='global_group'
+group_name='Developers'
 
 repo_root_dir = os.environ.get("REPO_ROOTPATH")
 print(f"REPO PATH:{repo_root_dir}")
@@ -61,7 +61,11 @@ def create_workflow(ws,job_json):
 
 def grant_permission(job_id,ws):
 
-    acl=[{"group_name":f"{group_name}","permission_level":"CAN_MANAGE"}]
+    manage_run='CAN_MANAGE_RUN'
+    view='CAN_VIEW'
+
+    acl=[{"group_name":f"{group_name}","permission_level":f"{manage_run}"},
+         {"group_name":f"Operations","permission_level":f"{view}"}]
 
     for ac in acl:
 
