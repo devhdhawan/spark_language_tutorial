@@ -28,7 +28,7 @@ print(vars)
 
 json_service_principal=parse("run_as.service_principal_name")
 
-json_notebook_path=parse("tasks[*].notebook_tasks.notebook_path")
+json_notebook_path=parse("tasks[*].notebook_task.notebook_path")
 
 def get_match_value(data,json_expr):
     return [match.value for match in json_expr.find(data)]
