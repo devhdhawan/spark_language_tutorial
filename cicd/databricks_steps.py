@@ -65,7 +65,7 @@ def grant_permission(job_id,ws):
     manage_run='CAN_MANAGE_RUN'
     view='CAN_VIEW'
 
-    acl=[{"group_name":f"{group_name}","permission_level":f"{view}"},
+    acl=[{"group_name":f"{developer_ad_group}","permission_level":f"{view}"},
          {"group_name":f"Operations","permission_level":f"{manage_run}"}]
     for ac in acl:
 
