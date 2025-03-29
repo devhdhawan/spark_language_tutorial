@@ -49,5 +49,11 @@ jobs:
           # python ./pyspark/python_script.py 
         env:
           CONTEXT_VARS: ${{toJson(vars)}}
+      
+      - name: Validate all the toJson
+        run: |
+          python ./cicd/json_validator.py
+        env:
+          CONTEXT_VARS: ${{ toJson(vars)}}
         
      
