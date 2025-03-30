@@ -187,7 +187,9 @@ def deploy_repo(api_client):
         tag_name = f"{os.environ.get('BUILD_DEFINITIONID')}_{os.environ.get('BUILD_BUILDNUMBER')}"
         
         #<--------- DEPLOY THE WORKFLOW --------->
-        ws.repos.update(repo_id=repo_id,branch=None,tag=tag_name)
+        print("UPDATING THE REPOS")
+        res=ws.repos.update(repo_id=repo_id,branch=None,tag=tag_name)
+        print(res)
     except Exception as e:
         print("NOT ABLE TO UPDATE THE REPOS IN DATABRICKS")
         print(e)
