@@ -2,6 +2,7 @@ import json
 import os
 import pandas as pd 
 from jsonpath_ng import parse
+from databricks.sdk.service.jobs import JobSettings
 
 repo_dir_path=os.getenv('GITHUB_WORKSPACE')
 print(f"REPO DIRECTORY PATH {repo_dir_path}")
@@ -64,6 +65,18 @@ def validate_json(json_df):
 
         if job_id:
             print("JOB JSON IS TO UPDATE THE EXISTING JOB")
+
+            try:
+                new_sett=JobSettings.from_dict(data.get('new_settings'))
+
+                match_value=get_match_value(new_sett,json_service_principal)
+
+                if all(spn==match_value for match_value in spn_lst):
+                    print(f"Valid SPN:{spn}")
+                else:
+                    print(f"INVALID SPN EXPECTING:{spn}")
+            except Exception as e:
+                print(f"INVALID JSON {e}")
 
         else:
             

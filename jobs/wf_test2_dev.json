@@ -8,7 +8,7 @@
     "max_concurrent_runs": 1,
     "tasks": [
         {
-            "task_key": "scala_job_task",
+            "task_key": "test_job",
             "run_if": "ALL_SUCCESS",
             "notebook_task": {
                 "notebook_path": "/Workspace/Repos/67e508af-5423-45fb-b8f9-42ade2e6a796/spark_language_tutorial/languages/scala/hellow_world.sc",
