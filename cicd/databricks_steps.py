@@ -60,6 +60,17 @@ def create_workflow(ws,job_json):
 
     return res
 
+def update_workflows(ws,job_json):
+    headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    }
+
+    #<--------- UPDATE THE JOB WORKFLOW --------->
+    res = ws.api_client.do(
+        "POST", "/api/2.2/jobs/update", body=job_json, headers=headers
+    )
+
 def grant_permission(job_id,ws):
 
     manage_run='CAN_MANAGE_RUN'
@@ -95,11 +106,19 @@ def deploy_workflow(ws,df):
 
             with open(workflow_file_path,'r') as file:
                 job_json=json.load(file)
-            
-            res=create_workflow(ws,job_json)
-            print(f"JOB ID:{res['job_id']}")
 
-            job_res=grant_permission(res['job_id'],ws)
+            job_id=job_json.get('job_id')
+
+            if job_id:
+                print("UPDATE THE EXISITING JOB WORKFLOW")
+                res=update_workflows(ws,job_json)
+
+                print(f"JOB:{job_id} UPDATE WORKFLOW SUCCESSFULLY")
+            else:
+                res=create_workflow(ws,job_json)
+                print(f"JOB ID:{res['job_id']}")
+
+                job_res=grant_permission(res['job_id'],ws)
         else:
             print("NO WORKFLOW MODIFY OR CREATED NEWLY")
 
