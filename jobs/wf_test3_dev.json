@@ -1,0 +1,47 @@
+{
+    "run_as": {
+        "service_principal_name": "5dda9c6f-659f-4a04-a8a1-cb38e076959a"
+  
+    },
+    "name": "WF_PYSPARK_DEV",
+    "webhook_notifications": {},
+    "timeout_seconds": 0,
+    "max_concurrent_runs": 1,
+    "tasks": [
+        {
+            "task_key": "test_job",
+            "run_if": "ALL_SUCCESS",
+            "notebook_task": {
+                "notebook_path": "/Workspace/Repos/5dda9c6f-659f-4a04-a8a1-cb38e076959a/spark_language_tutorial/languages/pyspark/hellow_world.sc",
+                "base_parameters": {
+                    "Environment": "DEV"
+                },
+                "source": "WORKSPACE"
+            },
+            "job_cluster_key": "Job_cluster",
+            "timeout_seconds": 0,
+            "email_notifications": {}
+        }
+    ],
+    "job_clusters": [
+        {
+            "job_cluster_key": "Job_cluster",
+            "new_cluster": {
+                "spark_version": "15.4.x-scala2.12",
+                "azure_attributes": {
+                    "first_on_demand": 1,
+                    "availability": "SPOT_WITH_FALLBACK_AZURE",
+                    "spot_bid_max_price": -1
+                },
+                "node_type_id": "Standard_D4ds_v5",
+                "spark_env_vars": {
+                    "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                },
+         
+                "data_security_mode": "LEGACY_SINGLE_USER_STANDARD",
+                "runtime_engine": "PHOTON",
+                "num_workers": 8
+            }
+        }
+    ]
+}
