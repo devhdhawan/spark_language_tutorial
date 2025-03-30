@@ -1,0 +1,21 @@
+{
+    "job_id":"423038192010363",
+    "new_settings":{
+    "tasks": [
+        {
+            "task_key": "test_job",
+            "run_if": "ALL_SUCCESS",
+            "notebook_task": {
+                "notebook_path": "/Workspace/Repos/85a4d344-30ac-400b-94e6-dcca17c1022a/spark_language_tutorial/languages/scala/hellow_world.sc",
+                "base_parameters": {
+                    "Environment": "DEV"
+                },
+                "source": "WORKSPACE"
+            },
+            "job_cluster_key": "Job_cluster",
+            "timeout_seconds": 0,
+            "email_notifications": {}
+        }
+    ]
+}
+}
