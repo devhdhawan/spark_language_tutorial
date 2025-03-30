@@ -69,7 +69,7 @@ def validate_json(json_df):
             try:
                 new_sett=JobSettings.from_dict(data.get('new_settings'))
 
-                match_value=get_match_value(new_sett,json_service_principal)
+                spn_lst=get_match_value(new_sett,json_service_principal)
 
                 if all(spn==match_value for match_value in spn_lst):
                     print(f"Valid SPN:{spn}")
