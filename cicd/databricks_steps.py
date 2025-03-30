@@ -73,13 +73,15 @@ def update_workflows(ws,job_json):
 
 def grant_permission(job_id,ws):
 
+    #<--------- SET PERMISSION VARIABLE --------->
     manage_run='CAN_MANAGE_RUN'
     view='CAN_VIEW'
 
+    #<--------- LIST OF GROUP AND PERMISSION LEVEL --------->
     acl=[{"group_name":f"{developer_ad_group}","permission_level":f"{view}"},
          {"group_name":f"Operations","permission_level":f"{manage_run}"}]
     for ac in acl:
-
+        
         job_data=JobAccessControlRequest.from_dict(ac)
 
         try:
